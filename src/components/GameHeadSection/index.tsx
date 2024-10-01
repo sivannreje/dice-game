@@ -6,11 +6,10 @@ type GameConfigSectionProps = {
     targetScore: number | undefined;
     setTargetScore: (targetScore: number) => void;
     onStartGame: () => void;
-    isGameActive: boolean;
     winner?: number
 }
 
-export function GameHeadSection({targetScore, setTargetScore, onStartGame, isGameActive, winner}: GameConfigSectionProps) {
+export function GameHeadSection({targetScore, setTargetScore, onStartGame, winner}: GameConfigSectionProps) {
     return (<>
         <h1>Dice Game</h1>
         <WinnerAnnouncement winner={winner}/>
@@ -21,7 +20,6 @@ export function GameHeadSection({targetScore, setTargetScore, onStartGame, isGam
                 value={targetScore}
                 onChange={(e) => setTargetScore(Number(e.target.value))}
                 placeholder="Enter target score"
-                disabled={isGameActive}
             />
             <button className='button' onClick={onStartGame}>Start A New Game</button>
         </div>

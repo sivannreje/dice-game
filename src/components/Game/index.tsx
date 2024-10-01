@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import {Player} from "../Player";
 import {GameHeadSection} from "../GameHeadSection";
@@ -15,34 +15,42 @@ export function Game() {
         const [isGameActive, setIsGameActive] = useLocalStorage<boolean>("isGameActive", false);
         const [winner, setWinner] = useLocalStorage<number | undefined>("winner");
 
+        useEffect(() => {
+            if(isGameActive) {
+                if (player1Score >= Number(targetScore)) {
+                    setIsGameActive(false);
+                    setWinner(1)
+                }
+                if (player2Score >= Number(targetScore)) {
+                    setIsGameActive(false);
+                    setWinner(2)
+                }
+            }
+        }, [player1Score, player2Score, isGameActive]);
+
         const rollDice = () => {
             if (!isGameActive) return;
 
             const dice1 = Math.floor(Math.random() * 6) + 1;
             const dice2 = Math.floor(Math.random() * 6) + 1;
             setDice([dice1, dice2]);
-
-            let newScore = dice1 + dice2;
-            if (dice1 === 6 && dice2 === 6) {
-                newScore = 0;
-            }
-
-            if (currentPlayer === 1) {
-                const updatedScore = dice1 === 6 && dice2 === 6 ? 0 : player1Score + newScore;
-                if (updatedScore >= Number(targetScore)) {
-                    setIsGameActive(false);
-                   setWinner(1)
-                }
-                setPlayer1Score(updatedScore);
-            } else {
-                const updatedScore = dice1 === 6 && dice2 === 6 ? 0 : player2Score + newScore;
-                if (updatedScore >= Number(targetScore)) {
-                   setIsGameActive(false);
-                    alert('Player 2 wins!');
-                }
-                setPlayer2Score(updatedScore);
-            }
+            updatePlayerScore(dice1, dice2,
+                currentPlayer === 1 ? player1Score: player2Score,
+                currentPlayer === 1 ? setPlayer1Score : setPlayer2Score);
         };
+
+        const updatePlayerScore = (dice1: number,
+                                   dice2: number,
+                                   playerScore: number,
+                                   setPlayerScore: (score: number)=> void) => {
+            if (dice1 === 6 && dice2 === 6) {
+                setPlayerScore(0);
+                passTurn();
+                return;
+            }
+            const newScore = dice1 + dice2;
+            setPlayerScore(playerScore + newScore);
+        }
 
         const passTurn = () => {
             setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
@@ -72,8 +80,7 @@ export function Game() {
                 setTargetScore={setTargetScore}
                 onStartGame={startGame}
                 winner={winner}
-                isGameActive={isGameActive}/>
-
+            />
                     <div className="game-area">
                         <Player
                             playerNumber={1}
