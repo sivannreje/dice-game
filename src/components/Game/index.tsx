@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocalStorage } from "@uidotdev/usehooks";
 import {Player} from "../Player";
 import {GameHeadSection} from "../GameHeadSection";
 import {Dice} from "../Dice";
@@ -6,13 +7,13 @@ import './index.css';
 
 export function Game() {
 
-        const [targetScore, setTargetScore] = useState<number | undefined>();
-        const [player1Score, setPlayer1Score] = useState(0);
-        const [player2Score, setPlayer2Score] = useState(0);
-        const [currentPlayer, setCurrentPlayer] = useState(1);
-        const [dice, setDice] = useState([1, 1]);
-        const [isGameActive, setIsGameActive] = useState(false);
-        const [winner, setWinner] = useState<number | undefined>();
+        const [targetScore, setTargetScore] = useLocalStorage<number | undefined>("targetScore");
+        const [player1Score, setPlayer1Score] = useLocalStorage<number>("player1Score", 0);
+        const [player2Score, setPlayer2Score] = useLocalStorage<number>("player2Score", 0);
+        const [currentPlayer, setCurrentPlayer] = useLocalStorage<number>("currentPlayer", 1);
+        const [dice, setDice] = useLocalStorage<number[]>("dice", [1, 1]);
+        const [isGameActive, setIsGameActive] = useLocalStorage<boolean>("isGameActive", false);
+        const [winner, setWinner] = useLocalStorage<number | undefined>("winner");
 
         const rollDice = () => {
             if (!isGameActive) return;
