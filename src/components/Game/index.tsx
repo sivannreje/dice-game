@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './index.css';
 import {Player} from "../Player";
 import {GameHeadSection} from "../GameHeadSection";
 import {Dice} from "../Dice";
+import './index.css';
 
 export function Game() {
 

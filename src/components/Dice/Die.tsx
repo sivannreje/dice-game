@@ -8,4 +8,4 @@ export function Die({ value }: {value: number}) {
             ))}
         </div>
     );
-};
+}
