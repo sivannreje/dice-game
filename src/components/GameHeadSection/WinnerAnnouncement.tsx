@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function WinnerAnnouncement({ winner }: { winner?: number }) {
     return (
         <div className="winner-announcement">

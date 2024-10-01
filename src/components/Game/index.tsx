@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import {Player} from "../Player";
 import {GameHeadSection} from "../GameHeadSection";
@@ -91,9 +91,7 @@ export function Game() {
                             isCurrentPlayer={currentPlayer === 2}
                             totalScore={player2Score}
                             dice={dice} />
-
                     </div>
-
             </div>
         );
     }
