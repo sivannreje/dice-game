@@ -23,7 +23,7 @@ export function GameHeadSection({targetScore, setTargetScore, onStartGame, isGam
                 placeholder="Enter target score"
                 disabled={isGameActive}
             />
-            <button className='button' onClick={onStartGame} disabled={isGameActive}>Start Game</button>
+            <button className='button' onClick={onStartGame}>Start A New Game</button>
         </div>
     </>)
 }
