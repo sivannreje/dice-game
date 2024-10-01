@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocalStorage } from "@uidotdev/usehooks";
 import {Player} from "../Player";
 import {GameHeadSection} from "../GameHeadSection";
@@ -53,6 +53,7 @@ export function Game() {
             setPlayer2Score(0);
             setCurrentPlayer(1);
             setDice([1,1])
+            setWinner(undefined);
         };
 
         const startGame = () => {
